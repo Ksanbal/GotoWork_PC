@@ -1,2 +1,3 @@
 apis.py
 *.json
+.idea/
