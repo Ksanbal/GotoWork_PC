@@ -9,15 +9,24 @@ Accounts = doc.worksheet('Accounts')
 
 
 # 출근 : 출근날짜와 시간을 시트에 추가하는 함수
-def goto(id):
-    # Attendance.append_row([return_date(), id, get_name(id), return_time()], 'USER_ENTERED')
-    pass
+def attendance(id):
+    Attendance.append_row([return_date(), id, return_time()], 'USER_ENTERED')
 
 
 # 퇴근 : 출근한 날짜를 찾아 퇴근시간을 시트에 추가하는 함수
 def leavework(id):
-    pass
+    try:
+        row = Attendance.find('{0}. {1}. {2}'.format(now.year, now.month, now.day)).row
+        findrow = 0  # 날짜와 이름이 같은 셀의 row
 
+        while findrow == 0:
+            if Attendance.acell('B'+row).value == id:
+                findrow = row
+
+            row = row + 1
+
+    except:
+        print("찾지 못했습니다.")
 
 # 시트의 날짜형식으로 반환해주는 함수
 def return_date():
