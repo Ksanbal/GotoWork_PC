@@ -33,10 +33,11 @@ def leavework(id):
         hour, minute = gettime(findrow)
         Attendance.update_cell(findrow, 5, hour)  # 근무시간 기록
         Attendance.update_cell(findrow, 6, minute)
-
+        return True
     except:
         print('탐색실패')
         Attendance.append_row([return_date(), id, '',return_time()], 'USER_ENTERED')
+        return False
     
 
 # 시간 - 시간을 구해주는 함수
