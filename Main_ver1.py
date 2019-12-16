@@ -22,7 +22,6 @@ class WindowClass(QMainWindow, form_class):
         self.btn_leavework.clicked.connect(self.pushbtn_leavework)  # 퇴근 버튼
 
     # 메소드 모음
-
     def setlabel_date(self):  # label에 현재 날짜를 띄우는 메소드
         self.label_nowdate.setText('{0}.{1}.{2}'.format(now.year, now.month, now.day))
 
@@ -38,21 +37,15 @@ class WindowClass(QMainWindow, form_class):
 
     def pushbtn_attendance(self):  # 출근 기능을 실행하는 메소드
         print(" 출근")
-        issuccess = attendance(self.lineEdit_name.text())
-
-        if issuccess == True:
-            QMessageBox.about(self, 'Success', '출근이 완료되었습니다.')
-        else:
-            QMessageBox.about(self, 'Error', '출근기록이 생성되지 않았습니다.')
+        result = attendance(self.lineEdit_name.text())
+        QMessageBox.about(None, 'Notice', result)
 
     def pushbtn_leavework(self):  # 퇴근 기능을 실행하는 메소드
         print(" 퇴근")
-        issuccess =  leavework(self.lineEdit_name.text())
+        result = leavework(self.lineEdit_name.text())
 
-        if issuccess == True:
-            QMessageBox.about(self, 'Success', '퇴근이 완료되었습니다.')
-        else:
-            QMessageBox.about(self, 'Error', '출근기록이 없어서 퇴근시간만 기록되었습니다.')
+        QMessageBox.about(None, 'Notice', result)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)  # 프로그램을 실행시켜주는 클래스
