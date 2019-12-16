@@ -38,7 +38,12 @@ class WindowClass(QMainWindow, form_class):
 
     def pushbtn_attendance(self):  # 출근 기능을 실행하는 메소드
         print(" 출근")
-        attendance(self.lineEdit_name.text())
+        issuccess = attendance(self.lineEdit_name.text())
+
+        if issuccess == True:
+            QMessageBox.about(self, 'Success', '출근이 완료되었습니다.')
+        else:
+            QMessageBox.about(self, 'Error', '출근기록이 생성되지 않았습니다.')
 
     def pushbtn_leavework(self):  # 퇴근 기능을 실행하는 메소드
         print(" 퇴근")
