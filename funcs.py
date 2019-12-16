@@ -12,14 +12,15 @@ Accounts = doc.worksheet('Accounts')
 def attendance(id):
     try:
         Attendance.append_row([return_date(), id, return_time()], 'USER_ENTERED')
+        return True
     except:
         print('출근이 정상적으로 실행되지 않았습니다.')
+        return False
 
 
 # 퇴근 : 출근한 날짜를 찾아 퇴근시간을 시트에 추가하는 함수
 def leavework(id):
-    # try:
-        print('탐색성공')
+    try:
         row = Attendance.find('{0}. {1}. {2}'.format(now.year, now.month, now.day)).row  # 해당 날짜의 첫 기록 탐색
         for _ in range(4):
             if Attendance.cell(row, 2).value == id:
@@ -30,13 +31,12 @@ def leavework(id):
         Attendance.update_cell(findrow, 4, return_time())  # 퇴근시간 기록
 
         hour, minute = gettime(findrow)
-        print(hour, minute)
         Attendance.update_cell(findrow, 5, hour)  # 근무시간 기록
         Attendance.update_cell(findrow, 6, minute)
 
-    # except:
-    #     print('탐색실패')
-    #     Attendance.append_row([return_date(), id, '',return_time()], 'USER_ENTERED')
+    except:
+        print('탐색실패')
+        Attendance.append_row([return_date(), id, '',return_time()], 'USER_ENTERED')
     
 
 # 시간 - 시간을 구해주는 함수
@@ -56,6 +56,7 @@ def gettime(row):
 
     return resulthour, resultminute
 
+ # 시트의 날짜형식을 숫자 시간과 분으로 반환하는 함수
 def time2int(s_time):
     splitedtime = s_time.split()
     hourclock12 = splitedtime[0]
