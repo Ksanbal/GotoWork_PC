@@ -18,28 +18,43 @@ def attendance(id):
 
 # 퇴근 : 출근한 날짜를 찾아 퇴근시간을 시트에 추가하는 함수
 def leavework(id):
-    try:
+    # try:
+        print('탐색성공')
         row = Attendance.find('{0}. {1}. {2}'.format(now.year, now.month, now.day)).row  # 해당 날짜의 첫 기록 탐색
-        print(row)  # 탐색 결과 테스트
         for _ in range(4):
             if Attendance.cell(row, 2).value == id:
                 findrow = row
                 break
             row = row + 1
 
-        print(findrow)
         Attendance.update_cell(findrow, 4, return_time())  # 퇴근시간 기록
-        # Attendance.update_cell(findrow, 5, ) # 근무시간 기록
-    except:
-        print('출근기록이 없어서 퇴근시간만 기록되었습니다.')
-        Attendance.append_row([return_date(), id, '',return_time()], 'USER_ENTERED')
+
+        hour, minute = gettime(findrow)
+        print(hour, minute)
+        Attendance.update_cell(findrow, 5, hour)  # 근무시간 기록
+        Attendance.update_cell(findrow, 6, minute)
+
+    # except:
+    #     print('탐색실패')
+    #     Attendance.append_row([return_date(), id, '',return_time()], 'USER_ENTERED')
     
 
 # 시간 - 시간을 구해주는 함수
-def gettime(row, subcol, mincol):
-    subtime = Attendance.cell(row, subcol)  # 감수
-    mintime = Attendance.cell(row, mincol)  # 피감수
+def gettime(row):
+    mintime = Attendance.cell(row, 4).value  # 피감수
+    subtime = Attendance.cell(row, 3).value  # 감수
 
+    minhour, minminute = time2int(mintime)
+    subhour, subminute = time2int(subtime)
+
+    if minminute < subminute:
+        minhour = minhour - 1
+        minminute = minminute + 60
+
+    resulthour = minhour - subhour
+    resultminute = minminute - subminute
+
+    return resulthour, resultminute
 
 def time2int(s_time):
     splitedtime = s_time.split()
