@@ -38,7 +38,7 @@ def leavework(id):
 
     elif isfind == 1:  # 퇴근 기능 정상 실행
         row = Attendance.find('{0}. {1}. {2}'.format(now.year, now.month, now.day)).row  # 해당 날짜의 첫 기록 탐색
-        for _ in range(4):
+        while Attendance.cell(row,2).value != '':
             if Attendance.cell(row, 2).value == id:
                 findrow = row
                 break
@@ -62,8 +62,8 @@ def checkhistory(id, col):
         row = Attendance.find('{0}. {1}. {2}'.format(now.year, now.month, now.day)).row  # 해당 날짜의 첫 기록 탐색
     except:
         return isfind  # 기록이 없는 경우
-
-    for _ in range(4):
+    
+    while Attendance.cell(row, 2).value != '':
         if Attendance.cell(row, 2).value == id:
             if Attendance.cell(row, col).value == '':  # 날짜와 이름은 있지만 해당 기록이 없는 경우
                 isfind = 1
