@@ -7,7 +7,7 @@ from funcs import *
 
 now = datetime.now()
 
-form_class = uic.loadUiType("UIs/Main_ver1.ui")[0]  # UI파일 연결
+form_class = uic.loadUiType("UIs/Main_v1.0.ui")[0]  # UI파일 연결
 
 
 class WindowClass(QMainWindow, form_class):
