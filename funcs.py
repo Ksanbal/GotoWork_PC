@@ -54,31 +54,6 @@ def leavework(id):
     elif isfind == 2:
         return '이미 퇴근하였습니다.'
 
-
-
-
-
-
-    # try:
-    #     row = Attendance.find('{0}. {1}. {2}'.format(now.year, now.month, now.day)).row  # 해당 날짜의 첫 기록 탐색
-    #     for _ in range(4):
-    #         if Attendance.cell(row, 2).value == id:
-    #             findrow = row
-    #             break
-    #         row = row + 1
-    #
-    #     Attendance.update_cell(findrow, 4, return_time())  # 퇴근시간 기록
-    #
-    #     hour, minute = gettime(findrow)
-    #     Attendance.update_cell(findrow, 5, hour)  # 근무시간 기록
-    #     Attendance.update_cell(findrow, 6, minute)
-    #     return '퇴근이 완료되었습니다.'
-    # except:
-    #     print('탐색실패')
-    #     Attendance.append_row([return_date(), id, '', return_time()], 'USER_ENTERED')
-    #     return '출근기록이 없어서 퇴근시간만 기록되었습니다.'
-
-
 # 해당 이름의 기록이 있는지 확인
 def checkhistory(id, col):
     # 0:기록이 아예 없는 경우, 1:퇴근 기록만 있고 출근이 없는 경우 또는 그 반대, 2: 기록이 이미 있는 경우
