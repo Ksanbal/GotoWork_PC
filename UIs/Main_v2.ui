@@ -2,9 +2,6 @@
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
-  <property name="enabled">
-   <bool>true</bool>
-  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,23 +10,8 @@
     <height>232</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>353</width>
-    <height>232</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>353</width>
-    <height>232</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>GotoWork_v2.0</string>
-  </property>
-  <property name="autoFillBackground">
-   <bool>false</bool>
+   <string>Dialog</string>
   </property>
   <widget class="QLabel" name="label_logo">
    <property name="geometry">
