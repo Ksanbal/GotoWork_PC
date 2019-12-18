@@ -7,10 +7,67 @@ from funcs import *
 
 now = datetime.now()
 
-form_class = uic.loadUiType("UIs/Main_v1.0.ui")[0]  # UI파일 연결
+login_class = uic.loadUiType('UIs/Login.ui')[0]  # 로그인창 ui 연결
+signup_class = uic.loadUiType('UIs/Signup.ui')[0]
+main_class = uic.loadUiType("UIs/Main_v2.ui")[0]  # 메인창 ui 연결
 
 
-class WindowClass(QMainWindow, form_class):
+# 로그인창
+class LoginWindowClass(QMainWindow, login_class):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.setlabel_date()
+        self.setlabel_logo()
+
+        self.btn_signup.clicked.connect(self.pushbtn_signup)
+
+    def setlabel_date(self):  # label에 현재 날짜를 띄우는 메소드
+        self.label_nowdate.setText('{0}.{1}.{2}'.format(now.year, now.month, now.day))
+
+    def setlabel_logo(self):  # label에 로고를 넣는 메소드
+        self.qPixmapVar = QPixmap()
+        self.qPixmapVar.load('img/bella_logo.png')
+        self.qPixmapVar = self.qPixmapVar.scaled(280, 101)
+
+        self.label_logo.setPixmap(self.qPixmapVar)  # 적용
+
+    def pushbtn_signin(self):
+        pass
+
+    def pushbtn_signup(self):
+        print('signup')
+        signupWindow = SignupWindowClass()
+        signupWindow.exec_()
+
+
+# 회원가입 창
+class SignupWindowClass(QDialog, signup_class):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.btn_confirm.clicked.connect(self.confirm)
+        self.btn_cancel.clicked.connect(self.cancel)
+
+    def confirm(self):
+        try:
+            name = self.lineEdit_name.text()
+            nickname = self.lineEdit_nickname.text()
+            birth = self.lineEdit_birth.text()
+            id = self.lineEdit_id.text()
+            passwd = self.lineEdit_passwd.text()
+            result = signup(name, nickname, birth, id, passwd)
+            QMessageBox.about(None, 'Notice', result)
+
+        except Exception as ex:
+            print(ex)
+
+    def cancel(self):
+        print('취소')
+        self.close()
+
+# 메인창
+class WindowClass(QMainWindow, main_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -49,6 +106,6 @@ class WindowClass(QMainWindow, form_class):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)  # 프로그램을 실행시켜주는 클래스
-    myWindow = WindowClass()
-    myWindow.show()  # 프로그램 화면을 보여주는 코드
+    loginWindow = LoginWindowClass()
+    loginWindow.show()
     app.exec_()  # 프로그램을 이벤트루프로 진입시키는 코드
