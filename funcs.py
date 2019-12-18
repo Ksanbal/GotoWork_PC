@@ -7,6 +7,23 @@ now = datetime.now()
 Attendance = doc.worksheet('Attendance')
 Accounts = doc.worksheet('Accounts')
 
+# 로그인 : 입력된 정보를 Accounts의 정보와 비교해 로그인을 수행하는 함수
+def signin(id, passwd):
+    findow = 0
+    issuccess = False
+    try:
+        findrow = Accounts.find(id).row
+    except:
+        return '존재하지 않는 id입니다', issuccess
+
+    if findrow != 0:  # 아이디는 맞은 경우
+        if passwd == Accounts.cell(findrow, 5).value:  # 비밀번호 열 번호 : 5
+            issuccess = True
+            return '로그인 성공', issuccess
+        else:
+            return '비밀번호가 맞지 않습니다', issuccess
+
+
 
 # 회원가입 : 입력된 정보를 Accounts시트에 추가하는 함수
 def signup(name, nickname, birth, id, passwd):

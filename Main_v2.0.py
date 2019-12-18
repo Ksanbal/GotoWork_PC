@@ -13,15 +13,17 @@ main_class = uic.loadUiType("UIs/Main_v2.ui")[0]  # 메인창 ui 연결
 
 
 # 로그인창
-class LoginWindowClass(QMainWindow, login_class):
+class LoginWindowClass(QDialog, login_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         self.setlabel_date()
         self.setlabel_logo()
 
+        self.btn_signin.clicked.connect(self.pushbtn_signin)
         self.btn_signup.clicked.connect(self.pushbtn_signup)
 
+    # 메소드 모음
     def setlabel_date(self):  # label에 현재 날짜를 띄우는 메소드
         self.label_nowdate.setText('{0}.{1}.{2}'.format(now.year, now.month, now.day))
 
@@ -32,10 +34,21 @@ class LoginWindowClass(QMainWindow, login_class):
 
         self.label_logo.setPixmap(self.qPixmapVar)  # 적용
 
-    def pushbtn_signin(self):
-        pass
+    def pushbtn_signin(self):  # 로그인 기능
+        id = self.lineEdit_id.text()
+        passwd = self.lineEdit_passwd.text()
+        result, issuccess = signin(id, passwd)
+        if issuccess:  # 로그인 성공
+            ok = QMessageBox.information(None, 'Notice', result)
 
-    def pushbtn_signup(self):
+            if ok:  # 확인버튼 클릭 후 메인창 띄우고, 로그인 정보 전달
+                mainWindow = MainWindowClass(id)
+                mainWindow.exec_()
+                self.close()
+        else:
+            QMessageBox.about(None, 'Notice', result)
+
+    def pushbtn_signup(self):  # 회원가입 기능
         print('signup')
         signupWindow = SignupWindowClass()
         signupWindow.exec_()
@@ -58,7 +71,6 @@ class SignupWindowClass(QDialog, signup_class):
             passwd = self.lineEdit_passwd.text()
             result = signup(name, nickname, birth, id, passwd)
             QMessageBox.about(None, 'Notice', result)
-
         except Exception as ex:
             print(ex)
 
@@ -66,11 +78,14 @@ class SignupWindowClass(QDialog, signup_class):
         print('취소')
         self.close()
 
+
 # 메인창
-class WindowClass(QMainWindow, main_class):
-    def __init__(self):
+class MainWindowClass(QDialog, main_class):
+    def __init__(self, nowid):
         super().__init__()
         self.setupUi(self)
+        self.nowid = nowid
+        print(nowid)
         self.setlabel_date()  # 현재 날짜로 업데이트
         self.setlabel_time()  # 현재 시간으로 업데이트
         self.setlabel_logo()  # 로고 업데이트
