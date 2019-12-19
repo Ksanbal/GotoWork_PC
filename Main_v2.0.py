@@ -42,9 +42,9 @@ class LoginWindowClass(QDialog, login_class):
             ok = QMessageBox.information(None, 'Notice', result)
 
             if ok:  # 확인버튼 클릭 후 메인창 띄우고, 로그인 정보 전달
+                self.close()
                 mainWindow = MainWindowClass(id)
                 mainWindow.exec_()
-                self.close()
         else:
             QMessageBox.about(None, 'Notice', result)
 
@@ -93,8 +93,8 @@ class MainWindowClass(QDialog, main_class):
         self.setlabel_time()  # 현재 시간으로 업데이트
         self.setlabel_logo()  # 로고 업데이트
 
-        self.btn_attendance.clicked.connect(self.pushbtn_attendance)  # 출근 버튼
-        self.btn_leavework.clicked.connect(self.pushbtn_leavework)  # 퇴근 버튼
+        # self.btn_attendance.clicked.connect(self.pushbtn_attendance)  # 출근 버튼
+        # self.btn_leavework.clicked.connect(self.pushbtn_leavework)  # 퇴근 버튼
 
     # 메소드 모음
     def setlabel_date(self):  # label에 현재 날짜를 띄우는 메소드
