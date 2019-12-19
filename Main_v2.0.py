@@ -108,7 +108,7 @@ class MainWindowClass(QDialog, main_class):
         self.setlabel_logo()            # 로고 업데이트
         self.setlabel_date()            # 현재 날짜로 업데이트
         self.setlabel_time()            # 현재 시간으로 업데이트
-        self.setlabel_welcome(nowid)    # 로그인한 계정의 닉네임으로 업데이트
+        self.setlabel_welcome()         # 로그인한 계정의 닉네임으로 업데이트
 
         # btn 관리
         self.setDisablebtn_manage(isadmin)                              # 권한에 따른 관리버튼 활성화 비활성화
@@ -133,9 +133,9 @@ class MainWindowClass(QDialog, main_class):
     def setlabel_time(self):
         self.label_nowtime.setText('{0}시 {1}분'.format(now.hour, now.minute))
 
-    # lable에 현재 로그인한 게정의 닉네임을 띄워는 메소드
-    def setlabel_welcome(self, id):
-        nickname = get_nickname(id)
+    # lable에 현재 로그인한 계정의 닉네임을 띄워는 메소드
+    def setlabel_welcome(self):
+        nickname = get_nickname(self.nowid)
         self.label_welcome.setText('어서오세요 {0}님'.format(nickname))  # 받아온 닉네임을 출력
         pass
 
@@ -147,15 +147,12 @@ class MainWindowClass(QDialog, main_class):
 
     # 출근 기능을 실행하는 메소드
     def pushbtn_attendance(self):
-        print(" 출근")
-        result = attendance(self.lineEdit_name.text())
+        result = attendance(self.nowid)
         QMessageBox.about(None, 'Notice', result)
 
     # 퇴근 기능을 실행하는 메소드
     def pushbtn_leavework(self):
-        print(" 퇴근")
-        result = leavework(self.lineEdit_name.text())
-
+        result = leavework(self.nowid)
         QMessageBox.about(None, 'Notice', result)
 
 
