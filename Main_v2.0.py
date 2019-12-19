@@ -26,17 +26,22 @@ class LoginWindowClass(QDialog, login_class):
         self.btn_signup.clicked.connect(self.pushbtn_signup)
 
     # 메소드 모음
-    def setlabel_date(self):  # label에 현재 날짜를 띄우는 메소드
+    # label 관련
+    # label에 현재 날짜를 띄우는 메소드
+    def setlabel_date(self):
         self.label_nowdate.setText('{0}.{1}.{2}'.format(now.year, now.month, now.day))
 
-    def setlabel_logo(self):  # label에 로고를 넣는 메소드
+    # label에 로고를 넣는 메소드
+    def setlabel_logo(self):
         self.qPixmapVar = QPixmap()
         self.qPixmapVar.load('img/bella_logo.png')
         self.qPixmapVar = self.qPixmapVar.scaled(280, 101)
 
         self.label_logo.setPixmap(self.qPixmapVar)  # 적용
 
-    def pushbtn_signin(self):  # 로그인 기능
+    # btn 관련
+    # 로그인 기능
+    def pushbtn_signin(self):
         id = self.lineEdit_id.text()
         passwd = self.lineEdit_passwd.text()
         result, issuccess, isadmin = signin(id, passwd)
@@ -50,7 +55,8 @@ class LoginWindowClass(QDialog, login_class):
         else:
             QMessageBox.about(None, 'Notice', result)
 
-    def pushbtn_signup(self):  # 회원가입 기능
+    # 회원가입 기능
+    def pushbtn_signup(self):
         print('signup')
         signupWindow = SignupWindowClass()
         signupWindow.exec_()
@@ -66,6 +72,9 @@ class SignupWindowClass(QDialog, signup_class):
         self.btn_confirm.clicked.connect(self.confirm)
         self.btn_cancel.clicked.connect(self.cancel)
 
+    # 메소드 모음
+    # btn 관련
+    # 회원가입을 진행 기능
     def confirm(self):
         try:
             name = self.lineEdit_name.text()
@@ -81,6 +90,7 @@ class SignupWindowClass(QDialog, signup_class):
         if issuccess:
             self.close()
 
+    # 회원가입 취소 기능
     def cancel(self):
         print('취소')
         self.close()
@@ -107,35 +117,42 @@ class MainWindowClass(QDialog, main_class):
 
     # 메소드 모음
     # label 관련
-    def setlabel_logo(self):  # label에 로고를 넣는 메소드
+    # label에 로고를 넣는 메소드
+    def setlabel_logo(self):
         self.qPixmapVar = QPixmap()
         self.qPixmapVar.load('img/bella_logo.png')
         self.qPixmapVar = self.qPixmapVar.scaled(201, 80)
 
         self.label_logo.setPixmap(self.qPixmapVar)  # 적용
 
-    def setlabel_date(self):  # label에 현재 날짜를 띄우는 메소드
+    # label에 현재 날짜를 띄우는 메소드
+    def setlabel_date(self):
         self.label_nowdate.setText('{0}.{1}.{2}'.format(now.year, now.month, now.day))
 
-    def setlabel_time(self):  # label에 현재 시간을 띄우는 메소드
+    # label에 현재 시간을 띄우는 메소드
+    def setlabel_time(self):
         self.label_nowtime.setText('{0}시 {1}분'.format(now.hour, now.minute))
 
-    def setlabel_welcome(self, id):  # lable에 현재 로그인한 게정의 닉네임을 띄워는 메소드
-        # 로그인한 사람의 닉네임을 받아오는 함수 호출
-        # self.label_welcome.setText('어서오세요 {0}님'.format(nickname))  # 받아온 닉네임을 출력
+    # lable에 현재 로그인한 게정의 닉네임을 띄워는 메소드
+    def setlabel_welcome(self, id):
+        nickname = get_nickname(id)
+        self.label_welcome.setText('어서오세요 {0}님'.format(nickname))  # 받아온 닉네임을 출력
         pass
 
     # btn 관련
-    def setDisablebtn_manage(self, isadmin):  # 로그인한 계정의 권한이 user일때 관리 버튼을 비활성화하는 메소드
+    # 로그인한 계정의 권한이 user일때 관리 버튼을 비활성화하는 메소드
+    def setDisablebtn_manage(self, isadmin):
         if not isadmin:  # 권한이 user인 경우
             self.btn_manage.setDisabled(True)
 
-    def pushbtn_attendance(self):  # 출근 기능을 실행하는 메소드
+    # 출근 기능을 실행하는 메소드
+    def pushbtn_attendance(self):
         print(" 출근")
         result = attendance(self.lineEdit_name.text())
         QMessageBox.about(None, 'Notice', result)
 
-    def pushbtn_leavework(self):  # 퇴근 기능을 실행하는 메소드
+    # 퇴근 기능을 실행하는 메소드
+    def pushbtn_leavework(self):
         print(" 퇴근")
         result = leavework(self.lineEdit_name.text())
 

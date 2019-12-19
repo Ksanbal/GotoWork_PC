@@ -166,8 +166,9 @@ def return_time():
 
 
 # 고유한 아이디의 닉네임을 가져오는 함수
-def get_name(id):
-    pass
+def get_nickname(id):
+    findrow = Accounts.find(id).row
+    return Accounts.cell(findrow, 2).value
 
 
 # 이름설정 : 사용자의 이름을 받아 시트에 chat_id와 이름을 추가하는 함수
