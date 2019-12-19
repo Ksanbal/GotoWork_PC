@@ -20,7 +20,13 @@ def signin(id, passwd):
     if findrow != 0:  # 아이디는 맞은 경우
         if passwd == Accounts.cell(findrow, 5).value:  # 비밀번호 열 번호 : 5
             issuccess = True
-            return '로그인 성공', issuccess
+            permission = Accounts.cell(findrow, 6).value
+            if permission == 'admin':
+                isadmin = True
+                return '환영합니다 관리자님', issuccess, isadmin
+            else:
+                isadmin = False
+                return '로그인 성공', issuccess, isadmin
         else:
             return '비밀번호가 맞지 않습니다', issuccess
 

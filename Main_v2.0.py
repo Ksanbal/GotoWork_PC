@@ -5,8 +5,6 @@ from PyQt5.QtGui import *
 
 from funcs import *
 
-now = datetime.now()
-
 login_class = uic.loadUiType('UIs/Login.ui')[0]  # 로그인창 ui 연결
 signup_class = uic.loadUiType('UIs/Signup.ui')[0]
 main_class = uic.loadUiType("UIs/Main_v2.ui")[0]  # 메인창 ui 연결
@@ -37,13 +35,13 @@ class LoginWindowClass(QDialog, login_class):
     def pushbtn_signin(self):  # 로그인 기능
         id = self.lineEdit_id.text()
         passwd = self.lineEdit_passwd.text()
-        result, issuccess = signin(id, passwd)
+        result, issuccess, isadmin = signin(id, passwd)
         if issuccess:  # 로그인 성공
             ok = QMessageBox.information(None, 'Notice', result)
 
-            if ok:  # 확인버튼 클릭 후 메인창 띄우고, 로그인 정보 전달
+            if ok:  # 확인버튼 클릭 후 메인창 띄우고, 로그인 정보와 권한 정보 전
                 self.close()
-                mainWindow = MainWindowClass(id)
+                mainWindow = MainWindowClass(id, isadmin)
                 mainWindow.exec_()
         else:
             QMessageBox.about(None, 'Notice', result)
@@ -84,11 +82,13 @@ class SignupWindowClass(QDialog, signup_class):
 
 # 메인창
 class MainWindowClass(QDialog, main_class):
-    def __init__(self, nowid):
+    def __init__(self, nowid, isadmin):
         super().__init__()
         self.setupUi(self)
-        self.nowid = nowid
+        self.nowid = nowid  # 현재 로그인한 사람의 id
+        self.isadmin = isadmin  # 현재 로그인한 사람의 권환(True: admin, False: user)
         print(nowid)
+        print(isadmin)
         self.setlabel_date()  # 현재 날짜로 업데이트
         self.setlabel_time()  # 현재 시간으로 업데이트
         self.setlabel_logo()  # 로고 업데이트
