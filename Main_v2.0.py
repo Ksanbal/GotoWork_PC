@@ -5,9 +5,10 @@ from PyQt5.QtGui import *
 
 from funcs import *
 
-login_class = uic.loadUiType('UIs/Login.ui')[0]  # 로그인창 ui 연결
-signup_class = uic.loadUiType('UIs/Signup.ui')[0]
-main_class = uic.loadUiType("UIs/Main_v2.ui")[0]  # 메인창 ui 연결
+# ui 연결
+login_class = uic.loadUiType('UIs/Login.ui')[0]     # 로그인창
+signup_class = uic.loadUiType('UIs/Signup.ui')[0]   # 회원가입창
+main_class = uic.loadUiType("UIs/Main_v2.ui")[0]    # 메인창
 
 
 # 로그인창
@@ -15,9 +16,12 @@ class LoginWindowClass(QDialog, login_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
+        # lable 관리
         self.setlabel_date()
         self.setlabel_logo()
 
+        # btn 관리
         self.btn_signin.clicked.connect(self.pushbtn_signin)
         self.btn_signup.clicked.connect(self.pushbtn_signup)
 
@@ -57,6 +61,8 @@ class SignupWindowClass(QDialog, signup_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
+        # btn 관리
         self.btn_confirm.clicked.connect(self.confirm)
         self.btn_cancel.clicked.connect(self.cancel)
 
@@ -85,30 +91,44 @@ class MainWindowClass(QDialog, main_class):
     def __init__(self, nowid, isadmin):
         super().__init__()
         self.setupUi(self)
-        self.nowid = nowid  # 현재 로그인한 사람의 id
-        self.isadmin = isadmin  # 현재 로그인한 사람의 권환(True: admin, False: user)
-        print(nowid)
-        print(isadmin)
-        self.setlabel_date()  # 현재 날짜로 업데이트
-        self.setlabel_time()  # 현재 시간으로 업데이트
-        self.setlabel_logo()  # 로고 업데이트
+        self.nowid = nowid              # 현재 로그인한 사람의 id
+        self.isadmin = isadmin          # 현재 로그인한 사람의 권환(True: admin, False: user)
 
-        # self.btn_attendance.clicked.connect(self.pushbtn_attendance)  # 출근 버튼
-        # self.btn_leavework.clicked.connect(self.pushbtn_leavework)  # 퇴근 버튼
+        # lable 관리
+        self.setlabel_logo()            # 로고 업데이트
+        self.setlabel_date()            # 현재 날짜로 업데이트
+        self.setlabel_time()            # 현재 시간으로 업데이트
+        self.setlabel_welcome(nowid)    # 로그인한 계정의 닉네임으로 업데이트
+
+        # btn 관리
+        self.setDisablebtn_manage(isadmin)                              # 권한에 따른 관리버튼 활성화 비활성화
+        self.btn_attendance.clicked.connect(self.pushbtn_attendance)    # 출근 버튼
+        self.btn_leavework.clicked.connect(self.pushbtn_leavework)      # 퇴근 버튼
 
     # 메소드 모음
-    def setlabel_date(self):  # label에 현재 날짜를 띄우는 메소드
-        self.label_nowdate.setText('{0}.{1}.{2}'.format(now.year, now.month, now.day))
-
-    def setlabel_time(self):  # label에 현재 시간을 띄워주는 메소드
-        self.label_nowtime.setText('{0}시 {1}분'.format(now.hour, now.minute))
-
+    # label 관련
     def setlabel_logo(self):  # label에 로고를 넣는 메소드
         self.qPixmapVar = QPixmap()
         self.qPixmapVar.load('img/bella_logo.png')
         self.qPixmapVar = self.qPixmapVar.scaled(201, 80)
 
         self.label_logo.setPixmap(self.qPixmapVar)  # 적용
+
+    def setlabel_date(self):  # label에 현재 날짜를 띄우는 메소드
+        self.label_nowdate.setText('{0}.{1}.{2}'.format(now.year, now.month, now.day))
+
+    def setlabel_time(self):  # label에 현재 시간을 띄우는 메소드
+        self.label_nowtime.setText('{0}시 {1}분'.format(now.hour, now.minute))
+
+    def setlabel_welcome(self, id):  # lable에 현재 로그인한 게정의 닉네임을 띄워는 메소드
+        # 로그인한 사람의 닉네임을 받아오는 함수 호출
+        # self.label_welcome.setText('어서오세요 {0}님'.format(nickname))  # 받아온 닉네임을 출력
+        pass
+
+    # btn 관련
+    def setDisablebtn_manage(self, isadmin):  # 로그인한 계정의 권한이 user일때 관리 버튼을 비활성화하는 메소드
+        if not isadmin:  # 권한이 user인 경우
+            self.btn_manage.setDisabled(True)
 
     def pushbtn_attendance(self):  # 출근 기능을 실행하는 메소드
         print(" 출근")

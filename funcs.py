@@ -165,7 +165,7 @@ def return_time():
     return '=TIME({0},{1},{2})'.format(now.hour, now.minute, now.second)
 
 
-# 고유한 아이디의 이름을 가져오는 함수
+# 고유한 아이디의 닉네임을 가져오는 함수
 def get_name(id):
     pass
 
