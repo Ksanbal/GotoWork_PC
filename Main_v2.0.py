@@ -69,10 +69,13 @@ class SignupWindowClass(QDialog, signup_class):
             birth = self.lineEdit_birth.text()
             id = self.lineEdit_id.text()
             passwd = self.lineEdit_passwd.text()
-            result = signup(name, nickname, birth, id, passwd)
+            result, issuccess = signup(name, nickname, birth, id, passwd)
             QMessageBox.about(None, 'Notice', result)
         except Exception as ex:
             print(ex)
+
+        if issuccess:
+            self.close()
 
     def cancel(self):
         print('취소')

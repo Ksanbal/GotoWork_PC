@@ -7,6 +7,7 @@ now = datetime.now()
 Attendance = doc.worksheet('Attendance')
 Accounts = doc.worksheet('Accounts')
 
+
 # 로그인 : 입력된 정보를 Accounts의 정보와 비교해 로그인을 수행하는 함수
 def signin(id, passwd):
     findow = 0
@@ -24,24 +25,25 @@ def signin(id, passwd):
             return '비밀번호가 맞지 않습니다', issuccess
 
 
-
 # 회원가입 : 입력된 정보를 Accounts시트에 추가하는 함수
 def signup(name, nickname, birth, id, passwd):
 
+    issuccess = False
     try:  # 중복 닉네임 검사
         Accounts.find(nickname)
-        return '이미 존재하는 닉네임입니다.'
+        return '이미 존재하는 닉네임입니다.', issuccess
     except:
         pass
     try:  # 중복 아이디 검사
         Accounts.find(id)
-        return '이미 존재하는 아이디입니다.'
+        return '이미 존재하는 아이디입니다.', issuccess
     except:
         pass
 
     # 중복된 데이터가 없는 경우
     Accounts.append_row([name, nickname, birth, id, passwd, 'user'], 'USER_ENTERED')
-    return '회원가입이 완료되었습니다.'
+    issuccess = True
+    return '회원가입이 완료되었습니다.', issuccess
 
 
 # 출근 : 출근날짜와 시간을 시트에 추가하는 함수
