@@ -13,43 +13,7 @@
   <property name="windowTitle">
    <string>Login</string>
   </property>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>184</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QLabel" name="label_Title">
-      <property name="font">
-       <font>
-        <pointsize>18</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>GotoWork</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_nowdate">
-      <property name="font">
-       <font>
-        <pointsize>18</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>2019.10.24</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -58,9 +22,21 @@
      <height>211</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>서울남산체 B</family>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QLabel" name="label_logo">
+      <property name="font">
+       <font>
+        <family>서울남산체 B</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>벨라 로고</string>
       </property>
@@ -75,6 +51,12 @@
           <property name="enabled">
            <bool>true</bool>
           </property>
+          <property name="font">
+           <font>
+            <family>서울남산체 B</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>로그인</string>
           </property>
@@ -82,6 +64,12 @@
         </item>
         <item row="1" column="0">
          <widget class="QLineEdit" name="lineEdit_passwd">
+          <property name="font">
+           <font>
+            <family>서울남산체 B</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>비밀번호</string>
           </property>
@@ -89,6 +77,12 @@
         </item>
         <item row="0" column="0">
          <widget class="QLineEdit" name="lineEdit_id">
+          <property name="font">
+           <font>
+            <family>서울남산체 B</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>아이디</string>
           </property>
@@ -98,6 +92,12 @@
          <widget class="QPushButton" name="btn_signup">
           <property name="enabled">
            <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <family>서울남산체 B</family>
+            <pointsize>12</pointsize>
+           </font>
           </property>
           <property name="text">
            <string>회원가입</string>
@@ -110,7 +110,8 @@
        <widget class="QLabel" name="label_maker">
         <property name="font">
          <font>
-          <pointsize>9</pointsize>
+          <family>서울남산체 B</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -124,6 +125,53 @@
      </layout>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="label_Title">
+   <property name="geometry">
+    <rect>
+     <x>21</x>
+     <y>11</y>
+     <width>131</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>서울남산체 B</family>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>GotoWork</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_nowdate">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>10</y>
+     <width>161</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>서울남산체 B</family>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="acceptDrops">
+    <bool>false</bool>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="text">
+    <string>2019.10.24</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
   </widget>
  </widget>
  <resources/>

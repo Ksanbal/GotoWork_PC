@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>340</width>
-    <height>218</height>
+    <width>396</width>
+    <height>214</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>GotoWork_v2</string>
   </property>
   <widget class="QLabel" name="label_logo">
    <property name="geometry">
@@ -21,6 +21,12 @@
      <width>201</width>
      <height>80</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>서울남산체 B</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <property name="tabletTracking">
     <bool>false</bool>
@@ -38,15 +44,16 @@
   <widget class="QLabel" name="label_title">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>20</y>
-     <width>101</width>
-     <height>16</height>
+     <x>270</x>
+     <y>30</y>
+     <width>131</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>18</pointsize>
+     <family>서울남산체 B</family>
+     <pointsize>15</pointsize>
     </font>
    </property>
    <property name="text">
@@ -58,16 +65,23 @@
     <rect>
      <x>10</x>
      <y>110</y>
-     <width>185</width>
+     <width>250</width>
      <height>93</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>서울남산체 B</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label_nowdate">
       <property name="font">
        <font>
-        <pointsize>18</pointsize>
+        <family>서울남산체 B</family>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -79,7 +93,8 @@
      <widget class="QLabel" name="label_nowtime">
       <property name="font">
        <font>
-        <pointsize>18</pointsize>
+        <family>서울남산체 B</family>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -91,7 +106,8 @@
      <widget class="QLabel" name="label_welcome">
       <property name="font">
        <font>
-        <pointsize>18</pointsize>
+        <family>서울남산체 B</family>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -104,15 +120,27 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>270</x>
      <y>70</y>
      <width>111</width>
      <height>134</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>서울남산체 B</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QPushButton" name="btn_manage">
+      <property name="font">
+       <font>
+        <family>서울남산체 B</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>관리</string>
       </property>
@@ -120,6 +148,12 @@
     </item>
     <item>
      <widget class="QPushButton" name="btn_attendance">
+      <property name="font">
+       <font>
+        <family>서울남산체 B</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>출근</string>
       </property>
@@ -127,6 +161,12 @@
     </item>
     <item>
      <widget class="QPushButton" name="btn_leavework">
+      <property name="font">
+       <font>
+        <family>서울남산체 B</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>퇴근</string>
       </property>
@@ -136,6 +176,12 @@
      <widget class="QPushButton" name="btn_check">
       <property name="enabled">
        <bool>false</bool>
+      </property>
+      <property name="font">
+       <font>
+        <family>서울남산체 B</family>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>출퇴근 조회</string>
