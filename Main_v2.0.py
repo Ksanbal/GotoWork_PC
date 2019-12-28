@@ -2,13 +2,15 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtGui import *
+from Vars import *
 
 from funcs import *
 
 # ui 연결
 login_class = uic.loadUiType('UIs/Login.ui')[0]     # 로그인창
 signup_class = uic.loadUiType('UIs/Signup.ui')[0]   # 회원가입창
-main_class = uic.loadUiType("UIs/Main_v2.ui")[0]    # 메인창
+main_class = uic.loadUiType('UIs/Main_v2.ui')[0]    # 메인창
+admin_class = uic.loadUiType('UIs/Admin.ui')[0]     # 관리자창
 
 
 # 로그인창
@@ -101,17 +103,18 @@ class MainWindowClass(QDialog, main_class):
     def __init__(self, nowid, isadmin):
         super().__init__()
         self.setupUi(self)
-        self.nowid = nowid              # 현재 로그인한 사람의 id
-        self.isadmin = isadmin          # 현재 로그인한 사람의 권환(True: admin, False: user)
+        self.nowid = nowid      # 현재 로그인한 사람의 id
+        self.isadmin = isadmin  # 현재 로그인한 사람의 권환(True: admin, False: user)
 
         # lable 관리
-        self.setlabel_logo()            # 로고 업데이트
-        self.setlabel_date()            # 현재 날짜로 업데이트
-        self.setlabel_time()            # 현재 시간으로 업데이트
-        self.setlabel_welcome()         # 로그인한 계정의 닉네임으로 업데이트
+        self.setlabel_logo()    # 로고 업데이트
+        self.setlabel_date()    # 현재 날짜로 업데이트
+        self.setlabel_time()    # 현재 시간으로 업데이트
+        self.setlabel_welcome() # 로그인한 계정의 닉네임으로 업데이트
 
         # btn 관리
         self.setDisablebtn_manage(isadmin)                              # 권한에 따른 관리버튼 활성화 비활성화
+        self.btn_manage.clicked.connect(self.pushbtn_manage)            # 관리 버튼
         self.btn_attendance.clicked.connect(self.pushbtn_attendance)    # 출근 버튼
         self.btn_leavework.clicked.connect(self.pushbtn_leavework)      # 퇴근 버튼
 
@@ -145,6 +148,10 @@ class MainWindowClass(QDialog, main_class):
         if not isadmin:  # 권한이 user인 경우
             self.btn_manage.setDisabled(True)
 
+    def pushbtn_manage(self):
+        adminWindow = AdminWindowClass()
+        adminWindow.exec()
+
     # 출근 기능을 실행하는 메소드
     def pushbtn_attendance(self):
         result = attendance(self.nowid)
@@ -154,6 +161,29 @@ class MainWindowClass(QDialog, main_class):
     def pushbtn_leavework(self):
         result = leavework(self.nowid)
         QMessageBox.about(None, 'Notice', result)
+
+
+# 관리자창
+class AdminWindowClass(QDialog, admin_class):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.btn_save.clicked.connect(self.pushbtn_save)        # 변경사항 저장
+        self.btn_cancel.clicked.connect(self.pushbtn_cancel)    # 취소
+
+    def pushbtn_save(self):
+        try:
+            timeVar = self.timeEdit.time()
+            Attendance_hour = timeVar.hour()
+            Attendance_min = timeVar.minute()
+            QMessageBox.about(None, 'Notice', '저장이 완료되었습니다.')
+        except Exception as ex:
+            QMessageBox.about(None, 'Notice', '에러가 발생하였습니다. {0}'.format(ex))
+
+
+    def pushbtn_cancel(self):
+        self.close()
 
 
 if __name__ == '__main__':
