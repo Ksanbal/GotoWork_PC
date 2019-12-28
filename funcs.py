@@ -1,5 +1,6 @@
 from datetime import datetime
 from Controlsheet import doc
+from Vars import *
 
 now = datetime.now()
 
@@ -12,15 +13,17 @@ Accounts = doc.worksheet('Accounts')
 def signin(id, passwd):
     findow = 0
     issuccess = False
+    isadmin = False
+
     try:
         findrow = Accounts.find(id).row
     except:
-        return '존재하지 않는 id입니다', issuccess
+        return '존재하지 않는 id입니다', issuccess, isadmin  # False 반환
 
     if findrow != 0:  # 아이디는 맞은 경우
-        if passwd == Accounts.cell(findrow, 5).value:  # 비밀번호 열 번호 : 5
+        if passwd == Accounts.cell(findrow, 5).value:   # 비밀번호 체크(비밀번호 열 번호 : 5)
             issuccess = True
-            permission = Accounts.cell(findrow, 6).value
+            permission = Accounts.cell(findrow, 6).value    # 권한정보 가져오기
             if permission == 'admin':
                 isadmin = True
                 return '환영합니다 관리자님', issuccess, isadmin
@@ -28,7 +31,7 @@ def signin(id, passwd):
                 isadmin = False
                 return '로그인 성공', issuccess, isadmin
         else:
-            return '비밀번호가 맞지 않습니다', issuccess
+            return '비밀번호가 맞지 않습니다', issuccess, isadmin
 
 
 # 회원가입 : 입력된 정보를 Accounts시트에 추가하는 함수
