@@ -64,10 +64,13 @@ def attendance(id):
     # 0:기록이 아예 없는 경우, 1:퇴근 기록만 있고 출근이 없는 경우 또는 그 반대, 2: 기록이 이미 있는 경우
     if isfind == 0:
         try:
-            Attendance.append_row([return_date(), name, nickname, return_time()], 'USER_ENTERED')
+            if islate(now.hour, now.minute):
+                Attendance.append_row([return_date(), name, nickname, return_time(), '', '', '', '지각'], 'USER_ENTERED')
+            else:
+                Attendance.append_row([return_date(), name, nickname, return_time(), '', '', '', '정상출근'], 'USER_ENTERED')
             return '출근이 완료되었습니다.'
-        except:
-            return '출근이 정상적으로 실행되지 않았습니다.'
+        except Exception as ex:
+            return '출근이 정상적으로 실행되지 않았습니다. {0}'.format(ex)
 
     elif isfind == 1:
         return '퇴근이 기록되어 있어 출근이 기록되지 않습니다.'
@@ -98,6 +101,7 @@ def leavework(id):
         Attendance.update_cell(findrow, 5, return_time())  # 퇴근시간 기록
 
         hour, minute = gettime(findrow)
+
         Attendance.update_cell(findrow, 6, hour)  # 근무시간 기록
         Attendance.update_cell(findrow, 7, minute)
         return '퇴근이 완료되었습니다.'
@@ -128,22 +132,44 @@ def checkhistory(nickname, col):
     return isfind  # 기록이 없는 경우
 
 
-# 시간 - 시간을 구해주는 함수
+# 시간 - 시간의 차 구해주는 함수
 def gettime(row):
     mintime = Attendance.cell(row, 5).value  # 피감수
     subtime = Attendance.cell(row, 4).value  # 감수
 
-    minhour, minminute = time2int(mintime)
-    subhour, subminute = time2int(subtime)
+    minhour, minmin = time2int(mintime)
+    subhour, submin = time2int(subtime)
 
-    if minminute < subminute:
-        minhour = minhour - 1
-        minminute = minminute + 60
+    if islate(subhour, submin):     # 지각인 경우 기록된 퇴근시간 - 출근시간
+        if minmin < submin:
+            minhour = minhour - 1
+            minmin = minmin + 60
 
-    resulthour = minhour - subhour
-    resultminute = minminute - subminute
+        resulthour = minhour - subhour
+        resultmin = minmin - submin
+    else:                           # 정상출근인 경우 퇴근시간 - 정해진 출근시
+        subhour, submin = attendance_hour, attendance_min
+        if minmin < submin:
+            minhour = minhour - 1
+            minmin = minmin + 60
 
-    return resulthour, resultminute
+        resulthour = minhour - subhour
+        resultmin = minmin - submin
+
+    # 점심시간이 포함되는지 확인
+    if subtime.hour < 12:  # 점심시간(12시-1) 1시간을 뺀 시간을 반환
+        return resulthour-1, resultmin
+    else:
+        return resulthour, resultmin
+
+
+# 출근시간이 지각인지 체크해주는 함수
+def islate(hour, minute):
+    isover = False
+    if hour > attendance_hour:
+        if minute > attendance_min:
+            isover = True   # 지각
+    return isover
 
 
 # 시트의 날짜형식을 숫자 시간과 분으로 반환하는 함수
@@ -183,3 +209,4 @@ def get_name(id):
 def get_nickname(id):
     findrow = Accounts.find(id).row
     return Accounts.cell(findrow, 2).value
+
