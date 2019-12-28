@@ -1,6 +1,6 @@
 from datetime import datetime
 from Controlsheet import doc
-from Vars import *
+import Vars as vars
 
 now = datetime.now()
 
@@ -148,7 +148,8 @@ def gettime(row):
         resulthour = minhour - subhour
         resultmin = minmin - submin
     else:                           # 정상출근인 경우 퇴근시간 - 정해진 출근시
-        subhour, submin = attendance_hour, attendance_min
+        subhour, submin = vars.attendance_hour, vars.attendance_min
+
         if minmin < submin:
             minhour = minhour - 1
             minmin = minmin + 60
@@ -166,8 +167,8 @@ def gettime(row):
 # 출근시간이 지각인지 체크해주는 함수
 def islate(hour, minute):
     isover = False
-    if hour > attendance_hour:
-        if minute > attendance_min:
+    if hour > vars.attendance_hour:
+        if minute > vars.attendance_min:
             isover = True   # 지각
     return isover
 
