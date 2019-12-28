@@ -2,7 +2,8 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtGui import *
-from Vars import *
+from PyQt5.QtCore import *
+import Vars as vars
 
 from funcs import *
 
@@ -169,21 +170,30 @@ class AdminWindowClass(QDialog, admin_class):
         super().__init__()
         self.setupUi(self)
 
+        # label 관련
+        self.setTimeEdit()
+        # btn 관련
         self.btn_save.clicked.connect(self.pushbtn_save)        # 변경사항 저장
         self.btn_cancel.clicked.connect(self.pushbtn_cancel)    # 취소
 
+    # 변경내용을 저장하는 메소드
     def pushbtn_save(self):
         try:
             timeVar = self.timeEdit.time()
-            Attendance_hour = timeVar.hour()
-            Attendance_min = timeVar.minute()
+            vars.attendance_hour = timeVar.hour()
+            vars.attendance_min = timeVar.minute()
             QMessageBox.about(None, 'Notice', '저장이 완료되었습니다.')
         except Exception as ex:
             QMessageBox.about(None, 'Notice', '에러가 발생하였습니다. {0}'.format(ex))
 
-
+    # 창을 끄는 메소드
     def pushbtn_cancel(self):
         self.close()
+
+    # 현재 저장되어있는 출근시간으로 셋업하는 메소드
+    def setTimeEdit(self):
+        timeVar = QTime(vars.attendance_hour, vars.attendance_min, 0)
+        self.timeEdit.setTime(timeVar)
 
 
 if __name__ == '__main__':
