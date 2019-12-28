@@ -1,2 +1,2 @@
-Attendance_hour = 10
-Attendance_min = 0
+attendance_hour = 10
+attendance_min = 0
