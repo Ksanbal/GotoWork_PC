@@ -7,9 +7,9 @@ add_files = [
     ('./img', 'img')
 ]
 
-app_name = 'GotoWork_PC_v2.0'
+app_name = 'GotoWork_PC_v2.1'
 
-a = Analysis(['Main_v2.0.py'],
+a = Analysis(['Main_v2.py'],
              pathex=['D:\\HG\\Programing\\GotoWork_PC'],
              binaries=[],
              datas=add_files,
